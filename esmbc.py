@@ -32,7 +32,10 @@ def print_table(ship_table):
 
 if __name__ == "__main__":
 
-    ship_dict = load_ship_dict('esmbc_data.json')
+    esmbc_dir = os.path.dirname(os.path.realpath(__file__))
+    data_file = os.path.join(esmbc_dir, 'esmbc_data.json')
+
+    ship_dict = load_ship_dict(data_file)
 
     ship_counts = {}
     for arg in sys.argv[1:]:
