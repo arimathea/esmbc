@@ -1,32 +1,37 @@
 #!/usr/bin/env python
 
 import sys
+import json
+import os
 
-smalimit = 1000000
-smatotal = 0
-
-ships = {
-    'cheetah': 17400,
-    'firetail': 16500,
-    'hound': 28100,
-    'loki': 80000,
-    'panther': 414000,
-    'prowler': 180000,
-    'rapier': 85000,
-    }
-
-for arg in sys.argv:
-    entry = arg.split(':')
-
-    if len(entry) == 2:
-        ship = entry[0]
-        count = entry[1]
+def load_ship_dict(filename):
+    if os.path.exists(filename):
+        with open(filename, 'rt') as esmbc_data:
+            return json.load(esmbc_data)
     else:
-        print('bad argument')
-        continue
+        print('Unable to load ship and volume data file')
+        sys.exit()
 
-    if ship in ships:
-       print('adding {0} {1}s'.format(count, ship))
-       smatotal += ships[ship] * int(count)
+if __name__ == "__main__":
+    print('{0}'.format(load_ship_dict('esmbc_data.json')))
 
-print('current sma: {0}/{1}m3'.format(smatotal, smalimit))
+    # smalimit = 1000000
+    # smatotal = 0
+
+    # del sys.argv[0]
+
+    # for arg in sys.argv:
+    # entry = arg.split(':')
+
+    # if len(entry) == 2:
+    #     ship = entry[0]
+    #     count = entry[1]
+    # else:
+    #     print('bad argument')
+    #     continue
+
+    # if ship in ships:
+    #    print('adding {0} {1}s'.format(count, ship))
+    #    smatotal += ships[ship] * int(count)
+
+    # print('current sma: {0}/{1}m3'.format(smatotal, smalimit))
