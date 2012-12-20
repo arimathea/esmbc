@@ -9,29 +9,36 @@ def load_ship_dict(filename):
         with open(filename, 'rt') as esmbc_data:
             return json.load(esmbc_data)
     else:
-        print('Unable to load ship and volume data file')
+        sys.stderr.write('Unable to load {0} data file \n'.format(filename))
         sys.exit()
 
+def build_ship_table(ship_counts, ship_dict):
+    ship_table = {}
+    for ship, count in ship_counts.items():
+        if ship in ship_dict:
+            ship_table[ship] = int(ship_dict[ship]) * int(count)
+        else:
+            sys.stderr.write('{0} is not a valid ship'.format(ship))
+
+    return ship_table
+
+def print_table(ship_table):
+    total = 0
+    for ship, subtotal in ship_table.items():
+        total += subtotal
+        print('{0:25} ==> {1:10}m3'.format(ship, subtotal))
+
+    print('{0:40}m3'.format(total))
+
 if __name__ == "__main__":
-    print('{0}'.format(load_ship_dict('esmbc_data.json')))
 
-    # smalimit = 1000000
-    # smatotal = 0
+    ship_dict = load_ship_dict('esmbc_data.json')
 
-    # del sys.argv[0]
+    ship_counts = {}
+    for arg in sys.argv[1:]:
+        ship, count = arg.split(':', maxsplit=1)
+        ship_counts[ship] = count
 
-    # for arg in sys.argv:
-    # entry = arg.split(':')
+    ship_table = build_ship_table(ship_counts, ship_dict)
 
-    # if len(entry) == 2:
-    #     ship = entry[0]
-    #     count = entry[1]
-    # else:
-    #     print('bad argument')
-    #     continue
-
-    # if ship in ships:
-    #    print('adding {0} {1}s'.format(count, ship))
-    #    smatotal += ships[ship] * int(count)
-
-    # print('current sma: {0}/{1}m3'.format(smatotal, smalimit))
+    print_table(ship_table)
