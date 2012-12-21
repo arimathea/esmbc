@@ -24,22 +24,23 @@ def get_child_groups(cursor, parent_group):
     children = cursor.fetchall()
 
     for child in children:
-        children += get_child_groups(child[0])
+        children += get_child_groups(cursor, child[0])
 
     return children
 
 def get_ship_volumes(cursor, group_ids):
     """Returns a tuple of the ship names and volumes in the specified groups"""
-    ship_volumes = ()
-    for group_id in group_ids:
-        sqlselect = "select typeName, volume"
-        sqlfrom = "from invTypes"
-        sqlwhere = "where marketGroupID={0}".format(group_id[0])
-        sqlwhere = "{0} and published=1".format(sqlwhere)
-        cursor.execute('{0} {1} {2}'.format(sqlselect, sqlfrom, sqlwhere))
-        ship_volumes += cursor.fetchall()
 
-    return ship_volumes
+    sqlselect = "select typeName, volume"
+    sqlfrom = "from invTypes"
+    sqlwhere = "where published=1"
+    sqlwhere = "{0} and marketGroupID={1}".format(sqlwhere, group_ids[0][0])
+
+    for group_id in group_ids[1:]:
+        sqlwhere = "{0} OR marketGroupID={1}".format(sqlwhere, group_id[0])
+
+    cursor.execute('{0} {1} {2}'.format(sqlselect, sqlfrom, sqlwhere))
+    return cursor.fetchall()
 
 def dict_convert(ship_volumes):
     """Converts and returns the supplied ship volume tuple in dictionary form"""
