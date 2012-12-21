@@ -24,15 +24,19 @@ def load_ship_dict(filename):
 
 def parse_arguments(args):
     """Parses the ship count pairs and returns a ship count dict"""
-
     if not args:
         sys.stderr.write('Please supply some ship:count pairs as arguments\n')
         sys.exit()
 
     ship_counts = {}
     for arg in args:
-        ship, count = arg.split(':', maxsplit=1)
-        ship_counts[ship] = count
+        try:
+            ship, count = arg.split(':', maxsplit=1)
+        except ValueError:
+            sys.stderr.write('Arguments need to be in format:  ship:count\n')
+            sys.exit()
+        else:
+            ship_counts[ship] = count
 
     return ship_counts
 
@@ -40,10 +44,14 @@ def build_ship_table(ship_counts, ship_dict):
     """Builds and returns a dict of ships and subtotal of their volumes"""
     ship_table = {}
     for ship, count in ship_counts.items():
-        if ship in ship_dict:
-            ship_table[ship] = int(ship_dict[ship]) * int(count)
-        else:
+        if ship not in ship_dict:
             sys.stderr.write('{0} is not a valid ship \n'.format(ship))
+            sys.exit()
+
+        try:
+            ship_table[ship] = int(ship_dict[ship]) * int(count)
+        except ValueError:
+            sys.stderr.write('Invalid ship count number \n')
             sys.exit()
 
     return ship_table
@@ -64,5 +72,4 @@ if __name__ == "__main__":
     ship_dict = load_ship_dict(data_file)
     ship_counts = parse_arguments(sys.argv[1:])
     ship_table = build_ship_table(ship_counts, ship_dict)
-
     print_table(ship_table)
