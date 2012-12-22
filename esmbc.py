@@ -15,12 +15,11 @@ import os
 
 def load_ship_dict(filename):
     """Loads the ship volume dictionary from a JSON file and returns it"""
-    if os.path.exists(filename):
-        with open(filename, 'rt') as esmbc_data:
-            return json.load(esmbc_data)
-    else:
-        sys.stderr.write('Unable to load {0} data file \n'.format(filename))
-        sys.exit()
+    if not os.path.exists(filename):
+        raise FileNotFoundError('Unable to load {0}'.format(filename))
+
+    with open(filename, 'rt') as esmbc_data:
+        return json.load(esmbc_data)
 
 def parse_arguments(args):
     """Parses the ship count pairs and returns a ship count dict"""
