@@ -101,7 +101,7 @@ if __name__ == "__main__":
         sys.exit()
 
     try:
-        volumes_totals = calculate_volume_totals(ship_counts, ship_volumes)
+        volume_totals = calculate_volume_totals(ship_counts, ship_volumes)
     except ValueError as error:
         sys.stderr.write('{0}\n'.format(error))
         sys.stderr.write('The second value in the ship:count pair needs to\n')
