@@ -3,8 +3,29 @@ ESMBC
 
 EVE Ship Maintenance Bay Calculator
 
-Esmbc is a command line volume calculator written in Python. It would probably
+Esmbc is a command line volume calculator for EVE online. It would probably
 be of most use to EVE pilots that own and fly Carriers.
+
+Screenshot
+----------
+
+Esmbc is a command line program so any screenshot would just be a terminal.
+Here is an example of the ouput though, in case you are curious:
+
+
+```python esmbc.py hound:3 talwar:2 sabre:1 rupture:1 hurricane:1 tornado:1```
+
+Outputs:
+
+```
+     43000m3 (sabre)
+     86000m3 (talwar)
+    216000m3 (tornado)
+     96000m3 (rupture)
+     84300m3 (hound)
+    216000m3 (hurricane)
+    741300m3
+```
 
 Installation
 ------------
@@ -14,11 +35,13 @@ repo or clone it:
 
 ```git clone git@github.com:stuartdb/seclit.git```
 
-The only files you actually require are the main scrtip ```esmbc.py``` and the
+The only files you actually require are the main script ```esmbc.py``` and the
 date file of the ship volumes ```esmbc_data.json```
 
-The only requirement for the is Python 3.
+Requirements
+------------
 
+esmbc's only requirement is python 3
 
 General Usage
 -------------
@@ -31,7 +54,6 @@ The colon ```:``` character is used as the seperater and a space is used to
 seperate ship:count pairs. Ship names can not contain spaces, if the ship name
 normally contains a space, just remove it. So ```Republic Fleet Firetail```
 would become ```republicfleetfiretail```.
-
 
 Data File Generation
 --------------------
@@ -46,7 +68,7 @@ Contact
 --------------------
 
 _Xikuan_ is the character to contact in game about esmbc, although creating
-tickets here on github would be better.
+tickets here on github would be better as I tend to ignore EVE Mail.
 
 License
 --------------------
