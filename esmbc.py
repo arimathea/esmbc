@@ -75,9 +75,46 @@ def format_table(volume_totals):
 
 if __name__ == "__main__":
     esmbc_dir = os.path.dirname(os.path.realpath(__file__))
-    data_file = os.path.join(esmbc_dir, 'esmbc_data.json')
+    filename = os.path.join(esmbc_dir, 'esmbc_data.json')
 
-    ship_dict = load_ship_dict(data_file)
-    ship_counts = parse_arguments(sys.argv[1:])
-    ship_table = build_ship_table(ship_counts, ship_dict)
-    print_table(ship_table)
+    try:
+        ship_volumes = load_volumes(filename)
+    except FileNotFoundError as error:
+        sys.stderr.write('{0}\n'.format(error))
+        sys.stderr,write('Please make sure the esmbc_data.json file is in\n')
+        sys.stderr.write('the same directory as esmbc\n')
+        sys.stderr.write('If it is missing, please redownload esmbc\n')
+        sys.exit()
+    except Exception as error:
+        sys.stderr.write('{0}\n'.format(error))
+        sys.exit()
+
+    try:
+        ship_counts = parse_ship_pairs(sys.argv[1:])
+    except ValueError as error:
+        sys.stderr.write('{0}\n'.format(error))
+        sys.exit()
+    except Exception as error:
+        sys.stderr.write('{0}\n'.format(error))
+        sys.stderr.write('Usage: esmbc ship:count ship:count\n')
+        sys.stderr.write('Example: esmbc rifter:10 zephyr:5 etc\n')
+        sys.exit()
+
+    try:
+        volumes_totals = calculate_volume_totals(ship_counts, ship_volumes)
+    except ValueError as error:
+        sys.stderr.write('{0}\n'.format(error))
+        sys.stderr.write('The second value in the ship:count pair needs to\n')
+        sys.stderr.write('be a number. Example: rifter:10\n')
+        sys.exit()
+    except Exception as error:
+        sys.stderr.write('{0}\n'.format(error))
+        sys.exit()
+
+    try:
+        total = format_table(volume_totals)
+    except Exception as error:
+        sys.stderr.write('{0}\n'.format(error))
+        sys.exit()
+
+    print('{0}'.format(total))
