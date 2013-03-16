@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-esmbc
+esmbc.cli
 ~~~~~
 
 Calculates total ship volume of supplied ships and quantity pairs.
@@ -73,9 +73,9 @@ def format_table(volume_totals):
     table = '{0}{1:10}m3'.format(table, total)
     return table
 
-if __name__ == "__main__":
+def main():
     esmbc_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = os.path.join(esmbc_dir, 'data', 'ships.json')
+    filename = os.path.join(esmbc_dir, 'ships.json')
 
     try:
         ship_volumes = load_volumes(filename)
