@@ -10,8 +10,8 @@ Test file for esmbc
 
 """
 import unittest
-import esmbc
 import os
+import esmbc.cli as esmbc
 
 class TestEsmbc(unittest.TestCase):
 
@@ -22,7 +22,7 @@ class TestEsmbc(unittest.TestCase):
         # }
         volumes = {'zephyr': 5000.0}
         esmbc_dir = os.path.dirname(os.path.realpath(__file__))
-        filename = os.path.join(esmbc_dir, 'data', 'test_ships.json')
+        filename = os.path.join(esmbc_dir, 'test_ships.json')
 
         self.assertEqual(esmbc.load_volumes(filename), volumes)
         self.assertRaises(FileNotFoundError, esmbc.load_volumes, 'foo.json')
