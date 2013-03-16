@@ -11,18 +11,20 @@ Test file for esmbc
 """
 import unittest
 import esmbc
+import os
 
 class TestEsmbc(unittest.TestCase):
 
     def test_load_ship_dict(self):
-        # test_esmbc_data.json:
+        # data/test_ships.json:
         # {
         #     "zephyr":5000.0
         # }
-        json_file = 'test_esmbc_data.json'
         volumes = {'zephyr': 5000.0}
+        esmbc_dir = os.path.dirname(os.path.realpath(__file__))
+        filename = os.path.join(esmbc_dir, 'data', 'test_ships.json')
 
-        self.assertEqual(esmbc.load_volumes(json_file), volumes)
+        self.assertEqual(esmbc.load_volumes(filename), volumes)
         self.assertRaises(FileNotFoundError, esmbc.load_volumes, 'foo.json')
 
     def test_parse_ship_pairs(self):

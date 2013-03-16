@@ -75,7 +75,7 @@ def format_table(volume_totals):
 
 if __name__ == "__main__":
     esmbc_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = os.path.join(esmbc_dir, 'esmbc_data.json')
+    filename = os.path.join(esmbc_dir, 'data', 'ships.json')
 
     try:
         ship_volumes = load_volumes(filename)
