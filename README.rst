@@ -12,7 +12,7 @@ Usage
 
 ``$ python esmbc.py hound:3 talwar:2 sabre:1 rupture:1 hurricane:1 tornado:1``
 
-``
+::
      43000m3 (sabre)
      86000m3 (talwar)
     216000m3 (tornado)
@@ -20,7 +20,6 @@ Usage
      84300m3 (hound)
     216000m3 (hurricane)
     741300m3
-``
 
 * Esmbc accepts ship names and quantities with the colon character as a seperator.
 * The pairs are seperated by a single whitespace.
@@ -31,7 +30,7 @@ Usage
 Installation
 ------------
 
-[Download a zip](https://github.com/stuartdb/esmbc/archive/master.zip) of this
+`Download a zip <https://github.com/stuartdb/esmbc/archive/master.zip>`_ of this
 repo or clone it.
 
 ``git clone git@github.com:stuartdb/seclit.git``
@@ -51,7 +50,7 @@ the future as CCP release new ship types.
 
 A script is included to access a MYSQL version of the CCP community data dump.
 
-``$ python esmbc_mysql.py > data/ships.json
+``$ python esmbc_mysql.py > data/ships.json``
 
 The ``pymysql`` module is a requirement of the data generation script.
 
@@ -59,4 +58,4 @@ License
 --------------------
 
 esmbc is released under the
-[GPLv3 license](https://www.gnu.org/licenses/gpl.html)
+`GPLv3 license <https://www.gnu.org/licenses/gpl.html>`_
