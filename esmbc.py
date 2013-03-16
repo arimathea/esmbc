@@ -7,7 +7,7 @@ Calculates total ship volume of supplied ships and quantity pairs.
 
 :copyright: (c) 2012 Stuart Baker
 :license: GNU GPL Version 3, see LICENSE
-
+n
 """
 import sys
 import json
@@ -81,7 +81,7 @@ if __name__ == "__main__":
         ship_volumes = load_volumes(filename)
     except FileNotFoundError as error:
         sys.stderr.write('{0}\n'.format(error))
-        sys.stderr,write('Please make sure the esmbc_data.json file is in\n')
+        sys.stderr.write('Please make sure the esmbc_data.json file is in\n')
         sys.stderr.write('the same directory as esmbc\n')
         sys.stderr.write('If it is missing, please redownload esmbc\n')
         sys.exit()
