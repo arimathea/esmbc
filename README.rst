@@ -4,19 +4,13 @@ ESMBC
 
 EVE Ship Maintenance Bay Calculator
 
-Esmbc is a command line volume calculator for EVE online. It would probably
+Esmbc is a command line ship volume calculator for EVE online. It would probably
 be of most use to EVE pilots that own and fly Carriers.
 
-Screenshot
+Usage
 ----------
 
-Esmbc is a command line program so any screenshot would just be a terminal.
-Here is an example of the ouput though, in case you are curious:
-
-
-``python esmbc.py hound:3 talwar:2 sabre:1 rupture:1 hurricane:1 tornado:1``
-
-Outputs:
+``$ python esmbc.py hound:3 talwar:2 sabre:1 rupture:1 hurricane:1 tornado:1``
 
 ``
      43000m3 (sabre)
@@ -28,42 +22,38 @@ Outputs:
     741300m3
 ``
 
+* Esmbc accepts ship names and quantities with the colon character as a seperator.
+* The pairs are seperated by a single whitespace.
+* Ship names which contain a white space or special character should have it removed.
+
+``Republic Fleet Firetail`` should be entered as ``republicfleetfiretail``.
+
 Installation
 ------------
 
 [Download a zip](https://github.com/stuartdb/esmbc/archive/master.zip) of this
-repo or clone it:
+repo or clone it.
 
 ``git clone git@github.com:stuartdb/seclit.git``
-
-The only files you actually require are the main script ``esmbc.py`` and the
-date file of the ship volumes ``esmbc_data.json``
 
 Requirements
 ------------
 
-esmbc's only requirement is python 3
+Esmbc was written against Python 3.3 as is the only requirement.
 
-General Usage
--------------
+Ship/Volume Data File
+---------------------
 
-Usage is fairly simple, esmbc takes ship:count pairs as arguments, that's it.
+The ship and volume data file that is required is supplied (``data/ships.json``).
 
-``python esmbc.py hound:3 talwar:2 sabre:1 rupture:1 hurricane:1 tornado:1``
+You also have the option to build your own data file. This may be required in
+the future as CCP release new ship types.
 
-The colon ``:`` character is used as the seperater and a space is used to
-seperate ship:count pairs. Ship names can not contain spaces, if the ship name
-normally contains a space, just remove it. So ``Republic Fleet Firetail``
-would become ``republicfleetfiretail``.
+A script is included to access a MYSQL version of the CCP community data dump.
 
-Data File Generation
---------------------
+``$ python esmbc_mysql.py > data/ships.json
 
-If you are an end user and just wish to use escmb you can ignore this section.
-The data file is included in the repository. For devs or curious power users the
-``esmbcgenerate.py`` script is what is used to generate the json data file.
-
-It uses the CCP community data dump and ``pymysql`` to generate the data.
+The ``pymysql`` module is a requirement of the data generation script.
 
 License
 --------------------
