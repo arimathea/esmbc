@@ -10,7 +10,7 @@ be of most use to EVE pilots that own and fly Carriers.
 Usage
 ----------
 
-``$ python esmbc.py hound:3 talwar:2 sabre:1 rupture:1 hurricane:1 tornado:1``
+``$ python -m esmbc hound:3 talwar:2 sabre:1 rupture:1 hurricane:1 tornado:1``
 
 ::
 
@@ -36,10 +36,20 @@ repo or clone it.
 
 ``git clone git@github.com:stuartdb/seclit.git``
 
+It's possible to just use esmbc without installation by just calling the module
+as shown in the usage section. If you wish to install it then:
+
+``$ pip install -r requirements.txt``
+
+or:
+
+``$ python setup.py install``
+
 Requirements
 ------------
 
-Esmbc was written against Python 3.3 as is the only requirement.
+Esmbc was written against Python 3.3 and is the only requirement to use. If you
+wish to install the module then ``distribute`` is required.
 
 Ship/Volume Data File
 ---------------------
