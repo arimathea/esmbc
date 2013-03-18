@@ -33,7 +33,7 @@ def parse_ship_pairs(pairs):
         try:
             ship, count = pair.split(':', maxsplit=1)
         except ValueError:
-            raise ValueError('Arguments need to be in format: ship:count')
+            raise ValueError('Invalid argument format')
         except:
             raise Exception('Unknown error occured while parsing ship pairs')
         else:
@@ -81,14 +81,16 @@ def format_table(volume_totals):
 def main():
     esmbc_dir = os.path.dirname(os.path.realpath(__file__))
     filename = os.path.join(esmbc_dir, 'ships.json')
+    usage = '''
+    Usage:\n
+    esmbc [ship:quantity]\n
+    Example:\n
+    esmbc rifter:2 hurricane:3\n'''
 
     try:
         ship_volumes = load_volumes(filename)
     except FileNotFoundError as error:
         sys.stderr.write('{0}\n'.format(error))
-        sys.stderr.write('Please make sure the esmbc_data.json file is in\n')
-        sys.stderr.write('the same directory as esmbc\n')
-        sys.stderr.write('If it is missing, please redownload esmbc\n')
         sys.exit()
     except Exception as error:
         sys.stderr.write('{0}\n'.format(error))
@@ -97,20 +99,16 @@ def main():
     try:
         ship_counts = parse_ship_pairs(sys.argv[1:])
     except ValueError as error:
-        sys.stderr.write('{0}\n'.format(error))
+        sys.stderr.write('{0}\n {1}'.format(error, usage))
         sys.exit()
     except Exception as error:
-        sys.stderr.write('{0}\n'.format(error))
-        sys.stderr.write('Usage: esmbc ship:count ship:count\n')
-        sys.stderr.write('Example: esmbc rifter:10 zephyr:5 etc\n')
+        sys.stderr.write('{0}\n {1}'.format(error, usage))
         sys.exit()
 
     try:
         volume_totals = calculate_volume_totals(ship_counts, ship_volumes)
     except ValueError as error:
-        sys.stderr.write('{0}\n'.format(error))
-        sys.stderr.write('The second value in the ship:count pair needs to\n')
-        sys.stderr.write('be a number. Example: rifter:10\n')
+        sys.stderr.write('{0}\n {1}'.format(error, usage))
         sys.exit()
     except Exception as error:
         sys.stderr.write('{0}\n'.format(error))

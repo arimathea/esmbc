@@ -33,7 +33,7 @@ class TestEsmbc(unittest.TestCase):
 
         self.assertDictEqual(counts, esmbc.parse_ship_pairs(pairs))
         self.assertRaisesRegex(ValueError,
-                               'Arguments need to be in format: ship:count',
+                               'Invalid argument format',
                                esmbc.parse_ship_pairs, 'foo')
         self.assertRaisesRegex(Exception,
                                'No ship and count pairs were supplied',
