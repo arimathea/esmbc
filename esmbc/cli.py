@@ -13,6 +13,7 @@ import sys
 import json
 import os
 
+
 def load_volumes(filename):
     """Loads the ship volume dictionary from a JSON file and returns it"""
     if not os.path.exists(filename):
@@ -20,6 +21,7 @@ def load_volumes(filename):
 
     with open(filename, 'rt') as esmbc_data:
         return json.load(esmbc_data)
+
 
 def parse_ship_pairs(pairs):
     """Parses the ship count pairs and returns a ship count dict"""
@@ -38,6 +40,7 @@ def parse_ship_pairs(pairs):
             ship_counts[ship] = count
 
     return ship_counts
+
 
 def calculate_volume_totals(ship_counts, ship_volumes):
     """Builds and returns a dict of ships and subtotal of their volumes"""
@@ -58,6 +61,7 @@ def calculate_volume_totals(ship_counts, ship_volumes):
 
     return volume_totals
 
+
 def format_table(volume_totals):
     """Prints the supplied ship volume table and total volume"""
     total = 0
@@ -72,6 +76,7 @@ def format_table(volume_totals):
 
     table = '{0}{1:10}m3'.format(table, total)
     return table
+
 
 def main():
     esmbc_dir = os.path.dirname(os.path.realpath(__file__))
