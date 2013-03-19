@@ -16,13 +16,11 @@ import sqlite3
 import json
 import argparse
 
+
 def get_child_groups(cur, parent_group):
     """Returns a tuple of all the child market group ids"""
-    sqlselect = "select marketGroupID"
-    sqlfrom = "from invMarketGroups"
-    sqlwhere = "where parentGroupID={0}".format(parent_group)
-
-    cur.execute('{0} {1} {2}'.format(sqlselect, sqlfrom, sqlwhere))
+    cur.execute('''select marketGroupID from invMarketGroups where
+                parentGroupID=?''', (parent_group,))
     children = cur.fetchall()
 
     for child in children:
@@ -30,19 +28,16 @@ def get_child_groups(cur, parent_group):
 
     return children
 
+
 def get_ship_volumes(cur, group_ids):
     """Returns a tuple of the ship names and volumes in the specified groups"""
+    query = '''select typeName, volume from invTypes
+            where published=1 and marketGroupID in ({})'''.format(
+        ','.join('?' for i in group_ids))
 
-    sqlselect = "select typeName, volume"
-    sqlfrom = "from invTypes"
-    sqlwhere = "where published=1"
-    sqlwhere = "{0} and marketGroupID={1}".format(sqlwhere, group_ids[0][0])
-
-    for group_id in group_ids[1:]:
-        sqlwhere = "{0} OR marketGroupID={1}".format(sqlwhere, group_id[0])
-
-    cur.execute('{0} {1} {2}'.format(sqlselect, sqlfrom, sqlwhere))
+    cur.execute(query, [id[0] for id in group_ids])
     return cur.fetchall()
+
 
 def dict_convert(ship_volumes):
     """Converts and returns the supplied ship volume tuple in dictionary form"""
@@ -55,12 +50,13 @@ def dict_convert(ship_volumes):
 
     return ship_dict
 
+
 def json_convert(ship_dict):
     """Return a json string of the supplied ship volume dictionary"""
     ship_json = json.dumps(ship_dict,
                            indent=4,
                            sort_keys=True,
-                           separators=(',',':'))
+                           separators=(',', ':'))
     return ship_json
 
 
@@ -80,7 +76,7 @@ def main():
     group_ids = get_child_groups(cur, market_group_id)
     ship_volumes = get_ship_volumes(cur, group_ids)
     ship_dict = dict_convert(ship_volumes)
-    print('{0}'.format(json_convert(ship_dict)))
+    print('{}'.format(json_convert(ship_dict)))
 
     cur.close()
     con.close()
