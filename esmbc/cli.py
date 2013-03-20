@@ -1,17 +1,19 @@
 #!/usr/bin/env python
 """
-esmbc.cli
+cli
 ~~~~~
 
-Calculates total ship volume of supplied ships and quantity pairs.
+Cli program that calculates total ship volume of supplied ships and quantity
+pairs.
 
-:copyright: (c) 2012 Stuart Baker
+:copyright: (c) 2013 Stuart Baker
 :license: GNU GPL Version 3, see LICENSE
-n
+
 """
 import sys
 import json
 import os
+import argparse
 
 
 def load_volumes(filename):
@@ -81,43 +83,26 @@ def format_table(volume_totals):
 def main():
     esmbc_dir = os.path.dirname(os.path.realpath(__file__))
     filename = os.path.join(esmbc_dir, 'ships.json')
-    usage = '''
-    Usage:\n
-    esmbc [ship:quantity]\n
-    Example:\n
-    esmbc rifter:2 hurricane:3\n'''
+    parser = argparse.ArgumentParser(prog='esmbc',
+        description='Calculates the total volume of supplied ships.')
+    parser.add_argument('ships', nargs='+',
+                        help='ships in the format ship:quantity')
+    parser.add_argument('-v', '--version', action='version',
+                        version='%(prog)s 0.2.0')
+    args = parser.parse_args()
 
     try:
         ship_volumes = load_volumes(filename)
+        ship_counts = parse_ship_pairs(args.ships)
+        volume_totals = calculate_volume_totals(ship_counts, ship_volumes)
+        total = format_table(volume_totals)
     except FileNotFoundError as error:
         sys.stderr.write('{0}\n'.format(error))
-        sys.exit()
-    except Exception as error:
-        sys.stderr.write('{0}\n'.format(error))
-        sys.exit()
-
-    try:
-        ship_counts = parse_ship_pairs(sys.argv[1:])
     except ValueError as error:
-        sys.stderr.write('{0}\n {1}'.format(error, usage))
-        sys.exit()
-    except Exception as error:
-        sys.stderr.write('{0}\n {1}'.format(error, usage))
-        sys.exit()
-
-    try:
-        volume_totals = calculate_volume_totals(ship_counts, ship_volumes)
-    except ValueError as error:
-        sys.stderr.write('{0}\n {1}'.format(error, usage))
-        sys.exit()
+        sys.stderr.write('{0}\n'.format(error))
     except Exception as error:
         sys.stderr.write('{0}\n'.format(error))
+    else:
+        print('{0}'.format(total))
+    finally:
         sys.exit()
-
-    try:
-        total = format_table(volume_totals)
-    except Exception as error:
-        sys.stderr.write('{0}\n'.format(error))
-        sys.exit()
-
-    print('{0}'.format(total))
