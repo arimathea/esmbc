@@ -22,13 +22,16 @@ Usage
     Hurricane: 216000m3
     Total: 741,300m3
 
-* Esmbc accepts ship names and quantities with the colon character used
+Esmbc accepts ship names and quantities with the colon character used
 as a seperator.
-* The pairs are seperated by a single whitespace.
-* Ship names which contain a white space should have it replaced with an
+
+The pairs are seperated by a single whitespace.
+
+Ship names which contain a white space should have it replaced with an
 underscore, all other special characters should not be entered.
 ``Republic Fleet Firetail`` should be entered as ``republic_fleet_firetail``.
-* Case is not important. ``Rifter``, ``RIFTER`` and ``rifter`` will all be
+
+Case is not important. ``Rifter``, ``RIFTER`` and ``rifter`` will all be
 matched correctly.
 
 Installation
