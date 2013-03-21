@@ -61,12 +61,21 @@ class TestEsmbc(unittest.TestCase):
                                                         volumes))
 
     def test_format_table(self):
-        totals = {'zephyr' : 10000}
-        table = '     10000m3 (zephyr)\n'
-        table = '{0}     10000m3'.format(table)
+        totals = {'zephyr':10000, 'vexor_navy_issue':112000}
+
+        table = 'Vexor Navy Issue: 112,000m3\n'
+        table = '{}Zephyr: 10,000m3\n'.format(table)
+        table = '{}Total: 122,000m3'.format(table)
 
         self.assertEqual(esmbc.format_table(totals), table)
         self.assertIsNone(esmbc.format_table({}))
+
+    def test_pretty_ship(self):
+        self.assertEqual(esmbc.pretty_ship('vexor_navy_issue'),
+                         'Vexor Navy Issue')
+        self.assertEqual(esmbc.pretty_ship('zephyr'),
+                         'Zephyr')
+        self.assertEqual(esmbc.pretty_ship(''), '')
 
 
 if __name__ == "__main__":
