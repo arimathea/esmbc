@@ -19,7 +19,7 @@ Usage
     Tornado: 216,000m3
     Rupture: 96,000m3
     Hound: 84,300m3
-    Hurricane: 216000m3
+    Hurricane: 216,000m3
     Total: 741,300m3
 
 Esmbc accepts ship names and quantities with the colon character used
