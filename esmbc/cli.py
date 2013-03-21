@@ -69,10 +69,19 @@ def format_table(volume_totals):
 
     for ship, subtotal in volume_totals.items():
         total += subtotal
-        table = '{0}{1:10}m3 ({2})\n'.format(table, subtotal, ship)
+        table = '{}{}: {:,}m3\n'.format(table, pretty_ship(ship), subtotal)
 
-    table = '{0}{1:10}m3'.format(table, total)
+    table = '{}Total: {:,}m3'.format(table, total)
     return table
+
+
+def pretty_ship(ship):
+    """Returns a ship name with underscores replaced with whitespace and the
+    the first letter of each word in uppercase
+    """
+    pretty = ship.replace('_', ' ')
+    pretty = pretty.title()
+    return pretty
 
 
 def main():
