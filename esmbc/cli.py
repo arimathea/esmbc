@@ -17,7 +17,11 @@ import argparse
 
 
 def load_volumes(filename):
-    """Loads the ship volume dictionary from a JSON file and returns it"""
+    """Loads the ship volume dictionary from a JSON file and returns it.
+
+    The funtion will raise a FileNotFoundError in the event the data file
+    can not be found.
+    """
     if not os.path.exists(filename):
         raise FileNotFoundError('Unable to load {}'.format(filename))
 
@@ -26,7 +30,14 @@ def load_volumes(filename):
 
 
 def parse_ship_pairs(pairs):
-    """Parses the ship count pairs and returns a ship count dict"""
+    """Parses the supplied ship count pairs and returns a ship count dict.
+
+    Expects a list of strings with each string containing a ship and quantity
+    using a colon as the seperator - ship:quanity.
+
+    If the an empty list is passed or an error occurs trying to parse the input
+    then None will be returned.
+    """
     if not pairs:
         return None
 
@@ -43,7 +54,14 @@ def parse_ship_pairs(pairs):
 
 
 def calculate_volume_totals(ship_counts, ship_volumes):
-    """Builds and returns a dict of ships and subtotal of their volumes"""
+    """Builds and returns a dict of ships and subtotal of their volumes.
+
+    Expects a dict of the ship names and a corresponding quantity.
+    A dict of ship volumes should also be supplied which will be used to lookup
+    and total the volumes.
+
+    Will return the dictionary or None
+    """
     if not ship_counts:
         return None
 
@@ -60,7 +78,13 @@ def calculate_volume_totals(ship_counts, ship_volumes):
 
 
 def format_table(volume_totals):
-    """Prints the supplied ship volume table and total volume"""
+    """Returns a string containing the supplied ships and volume totals.
+
+    The string returned will have a ship and subtotal volume on each line.
+    On the final line will be a grand total of all the ship volumes.
+
+    Will return the string or None
+    """
     total = 0
     table = ''
 
@@ -76,8 +100,11 @@ def format_table(volume_totals):
 
 
 def pretty_ship(ship):
-    """Returns a ship name with underscores replaced with whitespace and the
-    the first letter of each word in uppercase
+    """Returns a ship name with underscores removed and title cased.
+
+    Expects a string.
+    All underscores in the string will be replaces with a single whitespace
+    and each word in the string will have the first letter be in uppercase.
     """
     pretty = ship.replace('_', ' ')
     pretty = pretty.title()
@@ -85,14 +112,19 @@ def pretty_ship(ship):
 
 
 def main():
+    """Main entry point for the cli.
+
+    Uses argparse to parse command line arguments.
+    """
     esmbc_dir = os.path.dirname(os.path.realpath(__file__))
     filename = os.path.join(esmbc_dir, 'ships.json')
     parser = argparse.ArgumentParser(prog='esmbc',
-        description='Calculates the total volume of supplied ships.')
+        description='''Tool for capital ship pilots in the MMORPG EVE Online.
+                       Calculates the total volume of ships supplied.''')
     parser.add_argument('ships', nargs='+',
                         help='ships in the format ship:quantity')
     parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s 0.2.0')
+                        version='%(prog)s 0.3.0')
     args = parser.parse_args()
 
     try:
