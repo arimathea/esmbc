@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 from setuptools import setup
 
+with open('README.rst') as file:
+    long_description = file.read()
+
 setup(name='esmbc',
-      version='0.1',
+      version='0.3',
       description='EVE Online Ship Maintenance Bay Calculator',
+      long_description=long_description,
       license='GPL3',
       author='Stuart Baker',
       author_email='sdb@stuartdb.com',
