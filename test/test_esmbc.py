@@ -28,9 +28,9 @@ class TestEsmbc(unittest.TestCase):
 
         self.assertEqual(esmbc.load_volumes(filename), volumes)
 
-        self.assertRaises(FileNotFoundError, esmbc.load_volumes, '')
-        self.assertRaises(FileNotFoundError, esmbc.load_volumes, 42)
-        self.assertRaises(FileNotFoundError, esmbc.load_volumes, 'foo.json')
+        self.assertIsNone(esmbc.load_volumes(''))
+        self.assertIsNone(esmbc.load_volumes(42))
+        self.assertIsNone(esmbc.load_volumes('foo.json'))
 
     def test_parse_ship_pairs(self):
         pairs = ['foo:1', 'BAR:2']
