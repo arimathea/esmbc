@@ -44,7 +44,7 @@ def parse_ship_pairs(pairs):
     ship_counts = {}
     for pair in pairs:
         try:
-            ship, count = pair.split(':', maxsplit=1)
+            ship, count = pair.split(':', 1)
         except ValueError:
             return None
         else:
