@@ -5,7 +5,7 @@ with open('README.rst') as file:
     long_description = file.read()
 
 setup(name='esmbc',
-      version='0.3',
+      version='0.4',
       description='EVE Online Ship Maintenance Bay Calculator',
       long_description=long_description,
       license='GPL3',
@@ -27,6 +27,7 @@ setup(name='esmbc',
         'Intended Audience :: End Users/Desktop',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 2.7',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Topic :: Games/Entertainment'
         ]

@@ -60,7 +60,7 @@ or use obtain this repository as previously mentioned and:
 Requirements
 ------------
 
-Python 3.3 is the base requirement.
+Esmbc had been tested on Python 3.3 and Python 2.7.
 
 If you wish to install the module then ``distribute`` is required.
 

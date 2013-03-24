@@ -123,7 +123,7 @@ def main():
     parser.add_argument('ships', nargs='+',
                         help='ships in the format ship:quantity')
     parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s 0.3.0')
+                        version='%(prog)s 0.4.0')
     args = parser.parse_args()
 
     ship_volumes = load_volumes(filename)
