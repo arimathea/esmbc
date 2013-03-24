@@ -19,11 +19,10 @@ import argparse
 def load_volumes(filename):
     """Loads the ship volume dictionary from a JSON file and returns it.
 
-    The funtion will raise a FileNotFoundError in the event the data file
-    can not be found.
+    The funtion will return None in the event the data file can not be found.
     """
-    if not os.path.exists(filename):
-        raise FileNotFoundError('Unable to load {}'.format(filename))
+    if not os.path.exists(str(filename)):
+        return None
 
     with open(filename, 'rt') as esmbc_data:
         return json.load(esmbc_data)
@@ -127,10 +126,9 @@ def main():
                         version='%(prog)s 0.3.0')
     args = parser.parse_args()
 
-    try:
-        ship_volumes = load_volumes(filename)
-    except FileNotFoundError as error:
-        sys.stderr.write('{}\n'.format(error))
+    ship_volumes = load_volumes(filename)
+    if not ship_volumes:
+        sys.stderr.write('Unable to load ship/volume json data file.\n')
         sys.exit()
 
     ship_counts = parse_ship_pairs(args.ships)
